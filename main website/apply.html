@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>TM♤DEVBHOOMI Guild Application</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: black;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* animated background */
+
+        body::before {
+            content: "";
+            position: fixed;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(red 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: movebg 20s linear infinite;
+            opacity: 0.2;
+
+            pointer-events: none;
+        }
+
+        @keyframes movebg {
+            from {
+                transform: translate(0, 0);
+            }
+
+            to {
+                transform: translate(-200px, -200px);
+            }
+        }
+
+        /* hero */
+
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .hero h1 {
+            color: red;
+            font-size: 40px;
+            text-shadow: 0 0 15px red;
+        }
+
+        .hero p {
+            opacity: 0.8;
+        }
+
+        /* layout */
+
+        .container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            padding: 40px;
+            flex-wrap: wrap;
+        }
+
+        /* form box */
+
+        .form-box {
+            background: #111;
+            border: 2px solid red;
+            border-radius: 12px;
+            padding: 30px;
+            width: 320px;
+            box-shadow: 0 0 20px red;
+        }
+
+        .form-box h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 6px;
+            border: none;
+            outline: none;
+        }
+
+        input:focus,
+        select:focus {
+            box-shadow: 0 0 10px red;
+        }
+
+        /* button */
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: red;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: white;
+            color: red;
+            box-shadow: 0 0 15px red;
+        }
+
+        /* requirements */
+
+        .rules {
+            background: #111;
+            border: 2px solid red;
+            border-radius: 12px;
+            padding: 25px;
+            width: 250px;
+            height: fit-content;
+        }
+
+        .rules h3 {
+            color: red;
+        }
+
+        .rules p {
+            margin: 8px 0;
+        }
+
+        /* success */
+
+        #success {
+            display: none;
+            text-align: center;
+            color: lime;
+            margin-top: 10px;
+        }
+
+        /* loading */
+
+        #loading {
+            display: none;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        /* back button */
+
+        .back {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .back a {
+            color: white;
+            text-decoration: none;
+            border: 1px solid red;
+            padding: 8px 15px;
+            border-radius: 6px;
+        }
+
+        .back a:hover {
+            background: red;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="hero">
+
+        <h1>TM♤DEVBHOOMI</h1>
+        <p>Guild Application Form</p>
+        <p>Join the squad and prove your skills</p>
+
+    </div>
+
+    <div class="container">
+
+        <div class="form-box">
+
+            <h2>Apply Now</h2>
+
+            <form id="applyForm">
+
+                <input type="text" id="name" placeholder="Your Name" required>
+
+                <input type="text" id="uid" placeholder="Free Fire UID" required>
+
+                <input type="number" id="level" placeholder="Player Level" required>
+
+                <select id="role" required>
+
+                    <option value="">Select Role</option>
+                    <option>Rusher</option>
+                    <option>Sniper</option>
+                    <option>Support</option>
+                    <option>All Rounder</option>
+
+                </select>
+
+                <button type="submit">Submit Application</button>
+
+            </form>
+            <h2 style="text-align:center;margin-top:40px;">Guild Players</h2>
+
+            <div id="players" class="players"></div>
+
+            <div id="loading">Submitting...</div>
+
+            <div id="success">✅ Application Submitted Successfully!</div>
+
+            <div class="back">
+                <a href="guild.html">⬅ Back to Website</a>
+            </div>
+
+        </div>
+
+        <div class="rules">
+
+            <h3>Guild Requirements</h3>
+
+            <p>✔ Level 60+</p>
+            <p>✔ Weekly Glory 1000+</p>
+            <p>✔ Duo / Squad Players</p>
+            <p>✔ Active Player</p>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        const webhookURL = "https://discordapp.com/api/webhooks/1483117406263050361/j19DgHJ6-dEyX-RJdxuhgkgm2dTgwtPBh6QKFMTZAnyPRUVafoZuXOFuvLyIYx_3vFyG";
+
+        document.getElementById("applyForm").addEventListener("submit", function (e) {
+
+            e.preventDefault();
+
+            let name = document.getElementById("name").value;
+            let uid = document.getElementById("uid").value;
+            let level = document.getElementById("level").value;
+            let role = document.getElementById("role").value;
+
+            let players = document.getElementById("players");
+
+            let card = document.createElement("div");
+
+            card.classList.add("player-card");
+
+            card.innerHTML = `
+<h3>${name}</h3>
+<p>UID: ${uid}</p>
+<p>Role: ${role}</p>
+`;
+
+            players.appendChild(card);
+
+            if (level < 60) {
+                alert("Level must be 60+");
+                return;
+            }
+
+            document.getElementById("loading").style.display = "block";
+
+            let message = {
+                content:
+                    "🎮 New Guild Application\n\n" +
+                    "Name: " + name + "\n" +
+                    "UID: " + uid + "\n" +
+                    "Level: " + level + "\n" +
+                    "Role: " + role
+            };
+
+            fetch(webhookURL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(message)
+            });
+
+            setTimeout(() => {
+                document.getElementById("loading").style.display = "none";
+                document.getElementById("success").style.display = "block";
+            }, 1500);
+
+        });
+
+    </script>
+
+</body>
+
+</html>
